@@ -102,7 +102,7 @@ def post_discord(title: str, detail: str) -> None:
     # https://api.discord.com/docs/message-formatting
     # https://api.discord.com/docs/messages/builder
     payload = {
-        'text': f'**{title}**\n{detail}'
+        'content': f'**{title}**\n{detail}'
     }
     headers = {'Content-Type': 'application/json'}
 
