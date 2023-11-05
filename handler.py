@@ -5,7 +5,7 @@ import requests
 from datetime import datetime, timedelta, date
 
 
-SLACK_WEBHOOK_URL = os.environ.get('SLACK_WEBHOOK_URL')
+DISCORD_WEBHOOK_URL = os.environ.get('DISCORD_WEBHOOK_URL')
 
 
 def lambda_handler(event, context) -> None:
@@ -92,7 +92,7 @@ def get_message(total_billing: dict, service_billings: list) -> (str, str):
         if billing == 0.0:
             # 請求無し（0.0 USD）の場合は、内訳を表示しない
             continue
-        details.append(f'　・{service_name}: {billing:.2f} USD')
+        details.append(f'- {service_name}: {billing:.2f} USD')
 
     return title, '\n'.join(details)
 
@@ -109,7 +109,7 @@ def post_discord(title: str, detail: str) -> None:
     # http://requests-docs-ja.readthedocs.io/en/latest/user/quickstart/
     try:
         response = requests.post(
-            SLACK_WEBHOOK_URL, json.dumps(payload), headers=headers)
+            DISCORD_WEBHOOK_URL, json.dumps(payload), headers=headers)
     except requests.exceptions.RequestException as e:
         print(e)
     else:
